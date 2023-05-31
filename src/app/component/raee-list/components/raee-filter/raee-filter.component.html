@@ -1,0 +1,151 @@
+<!-- <ng-template #table> -->
+  <ng-template #noItems>
+    <p class="p-3 mb-2 bg-warning text-dark">No existe elementos</p>
+  </ng-template>
+
+
+  <div class="card">
+    <div class="card-body">
+
+      <h4 class="card-title text-dark fs-8 pb-2">Lista Lecturas de los RAEE</h4>
+
+      <p class="card-subtitle text-dark fs-8 pb-2" *ngIf="raee.length!=0; else noItems"># de items:  <b>{{raee.length}}</b></p>
+
+      <hr>
+
+      <div class="table-responsive">
+        <table class="table align-middle text-nowrap ">
+          <thead class="text-center">
+
+            <!-- <th class="text-dark fs-4">RAEE #</th> -->
+            <th></th>
+            <th class="text-dark text-center fs-4"></th>
+            <th>
+              <div class="card">
+                <img class="card-img-top img-responsive" src="assets/images/pics/dom1.jpg" alt="Card image cap" />
+                <div class="card-body">
+                  <h4 class="card-title text-dark text-center">Domicilio</h4>
+                </div>
+              </div>
+            </th>
+
+            <th></th>
+
+
+            <th>
+              <div class="card">
+                <img class="card-img-top img-responsive" src="assets/images/pics/rec2.png" alt="Card image cap" />
+                <div class="card-body">
+                  <h4 class="card-title text-dark text-center">Punto de Recogida</h4>
+                </div>
+              </div>
+            </th>
+
+            <th></th>
+
+            <th>
+              <div class="card">
+                <img class="card-img-top img-responsive" src="assets/images/pics/cac3.png" alt="Card image cap" />
+                <div class="card-body">
+                  <h4 class="card-title text-dark text-center">CAC</h4>
+                </div>
+              </div>
+            </th>
+
+            <th></th>
+
+            <th>
+              <div class="card">
+                <img class="card-img-top img-responsive" src="assets/images/pics/planta4.png" alt="Card image cap" />
+                <div class="card-body">
+                  <h4 class="card-title text-dark text-center">Planta de Tratamiento</h4>
+                </div>
+              </div>
+            </th>
+
+
+      </thead>
+
+
+
+
+
+
+      <ng-template #imagenFlecha>
+        <div class="tooltip-content">
+          <img class="flecha" src="assets\images\pics\flecha.png" alt="">
+        </div>
+      </ng-template>
+
+
+      <ng-template #punto>
+        <div class="tooltip-content">
+          <!-- <img [ngbTooltip]="raeeContent" class="punto" src="assets\images\pics\puntoAzul.png" alt=""> -->
+          <img class="punto" [ngbTooltip]="raeeContent"  src="assets\images\pics\puntoAzul.png" alt="">
+        </div>
+      </ng-template>
+
+
+
+      <ng-container >
+
+        <ng-template #raeeContent>
+            <div class="tooltip-content">
+            <raee-window-raee [raee]="exportedValue"></raee-window-raee>
+          </div>
+          </ng-template>
+
+
+          <tbody class="text-center">
+            <ng-container>
+            <tr *ngFor="let r of raee; let i = index">
+
+              <td><button type="button" [ngbTooltip]="raeeContent" (mouseenter)="exportValue(r)" class="btn btn-outline-primary m-1"> RAEE #{{r.CargaDatosLecturasId}}</button></td>
+
+              <!-- <button type="button" class="btn btn-outline-primary m-1" ngbTooltip="Donde: {{r.Donde}}" >RAEE {{r.CargaDatosLecturasId}}</button> -->
+
+              <td>:</td>
+              <td  (mouseenter)="exportValue(r)" ><ng-container  *ngTemplateOutlet="punto" ></ng-container></td>
+              <td *ngIf="r.Donde === 'Punto de Recogida' || r.Donde === 'CAC' || r.Donde === 'Planta de Tratamiento'">
+                <ng-container *ngTemplateOutlet="imagenFlecha"></ng-container>
+                </td>
+              <td  (mouseenter)="exportValue(r)" *ngIf="r.Donde === 'Punto de Recogida' || r.Donde === 'CAC' || r.Donde === 'Planta de Tratamiento'">
+                <ng-container  *ngTemplateOutlet="punto" ></ng-container>
+              </td>
+
+              <td *ngIf="r.Donde === 'CAC' || r.Donde === 'Planta de Tratamiento'">
+                <ng-container *ngTemplateOutlet="imagenFlecha"></ng-container></td>
+              <td (mouseenter)="exportValue(r)"  *ngIf="r.Donde === 'CAC' || r.Donde === 'Planta de Tratamiento'">
+                <ng-container *ngTemplateOutlet="punto" ></ng-container></td>
+
+              <td *ngIf="r.Donde === 'Planta de Tratamiento'">
+                <ng-container *ngTemplateOutlet="imagenFlecha"></ng-container></td>
+              <td (mouseenter)="exportValue(r)"  *ngIf="r.Donde === 'Planta de Tratamiento'">
+                <ng-container *ngTemplateOutlet="punto" ></ng-container></td>
+            </tr>
+          </ng-container>
+          </tbody>
+
+        </ng-container>
+
+        </table>
+
+
+
+      </div>
+    </div>
+
+<!-- </ng-template> -->
+
+
+      <!-- <ng-container *ngFor="let r of raee; let i = index">
+        <button type="button" [ngbTooltip]="tooltipContent" placement="top">
+          {{ r.CargaDatosLecturasId }}
+        </button>
+
+        <ng-template #tooltipContent let-r>
+          <div class="tooltip-content">
+            <raee-window-raee [raee]="r"></raee-window-raee>
+          </div>
+        </ng-template>
+      </ng-container> -->
